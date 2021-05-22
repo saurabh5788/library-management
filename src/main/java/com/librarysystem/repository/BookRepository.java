@@ -2,6 +2,7 @@ package com.librarysystem.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +17,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 			+ "and (:categoryId is null or b.category.id = :categoryId)")
 	List<Book> fetchBooksByAuthorTitleCategory(@Param("author") String author,
 			@Param("title") String title,
-			@Param("categoryId") Integer categoryId);
+			@Param("categoryId") Integer categoryId, Pageable pageable);
 
 }

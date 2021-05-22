@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,9 @@ public class BookController {
 			@PathVariable("userid") Integer userId,
 			@RequestParam("author") Optional<String> authorParam,
 			@RequestParam("title") Optional<String> titleParam,
-			@RequestParam("category") Optional<Integer> categoryIdParam/*,
-			@RequestParam String pageNo*/) {
+			@RequestParam("category") Optional<Integer> categoryIdParam,
+			@RequestParam(name="pageno",defaultValue="0") Optional<Integer> pageNoParam,
+			@RequestParam(name="pagesize",defaultValue="10") Optional<Integer> pageSizeParam) {
 		
 		if (userId == null || userId < 1 || !userService.isUserPresent(userId)) {
 			return ResponseEntity.badRequest().body(
@@ -72,7 +74,7 @@ public class BookController {
 							.getProperty("message.book.search.nocriteria")));
 		}
 		List<Book> bookList = bookService.fetchBooksByAuthorTitleCategory(
-				author, title, categoryId);
+				author, title, categoryId, pageNoParam.get(), pageSizeParam.get());
 		if (!CollectionUtils.isEmpty(bookList)) {
 			BooksResponseDTO booksResponseDTO = new BooksResponseDTO(bookList);
 			return ResponseEntity.ok(booksResponseDTO);

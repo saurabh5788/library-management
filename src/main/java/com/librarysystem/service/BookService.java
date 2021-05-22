@@ -14,6 +14,6 @@ public interface BookService {
 	ResponseEntity<?> returnBooks();
 
 	List<Book> fetchBooksByAuthorTitleCategory(String author, String title,
-			Integer categoryId);
+			Integer categoryId, int pageNo, int pageSize);
 	
 }
