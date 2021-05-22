@@ -15,15 +15,15 @@ import javax.persistence.Table;
 @Table(name = "book")
 public class Book {
 	
-	@Column
+	@Column(name="book_id")
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int bookId;
 	
-	@Column
+	@Column(name="title")
 	private String title;
 	
-	@Column
+	@Column(name="author")
 	private String author;
 	
 	@JoinColumn(name="categoryId")
