@@ -10,26 +10,26 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="role")
+@Table(name="role_table")
 public class Role {
 	
-	@Column
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int roleId;
-	@Column
-	private String roleName;
-	public int getRoleId() {
-		return roleId;
+	private int id;
+	@Column(name = "name", length = 20, nullable = false, unique = true, updatable = false)
+	private String name;
+	
+	public int getId() {
+		return id;
 	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getRoleName() {
-		return roleName;
+	public String getName() {
+		return name;
 	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setName(String name) {
+		this.name = name;
 	}
-
+	
 }

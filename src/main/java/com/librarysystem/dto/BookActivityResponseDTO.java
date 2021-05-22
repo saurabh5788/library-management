@@ -1,6 +1,14 @@
 package com.librarysystem.dto;
 
 public class BookActivityResponseDTO {
+	
+	
+
+	public BookActivityResponseDTO(String message, String httpStatus) {
+		super();
+		this.message = message;
+		this.httpStatus = httpStatus;
+	}
 
 	private String message;
 	
