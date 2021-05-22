@@ -14,4 +14,4 @@ INSERT INTO book (book_id,title,author,category_Id) values (3,'Harry Potter and 
 INSERT INTO book (book_id,title,author,category_Id) values (4,'Harry Potter and the Order of the Phoenix','Rowling, J.K.',1);
 INSERT INTO book (book_id,title,author,category_Id) values (5,'Lovely Bones,The','Sebold, Alice',5);
 
-INSERT INTO user (user_id,user_name,password, role_id) values (1, 'saurabh_57@hotmail.com','password',2); 
+INSERT INTO user (user_id,user_name,password, role_id) values (1, 'saurabh57','password',2); 
