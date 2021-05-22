@@ -16,11 +16,10 @@ public class User {
 	@Column
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String userId;
+	private int userId;
 	
 	@Column
 	private String userName;
-	
 	
 	@Column
 	private String password;

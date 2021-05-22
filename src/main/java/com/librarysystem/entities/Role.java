@@ -16,13 +16,13 @@ public class Role {
 	@Column
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String roleId;
+	private int roleId;
 	@Column
 	private String roleName;
-	public String getRoleId() {
+	public int getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(String roleId) {
+	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
 	public String getRoleName() {
