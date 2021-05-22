@@ -2,6 +2,8 @@ package com.librarysystem.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,8 @@ import com.librarysystem.repository.BookRepository;
 
 @Service
 public class BookServiceImpl implements BookService {
-
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(BookServiceImpl.class);
 	private BookRepository bookRepository;
 	
 	@Autowired
@@ -39,6 +42,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> fetchBooksByAuthorTitleCategory(String author,
 			String title, Integer categoryId){
+		LOGGER.info("fetching Books by : {}, {}, {}",author,title,categoryId);
 		List<Book> bookList = bookRepository.fetchBooksByAuthorTitleCategory(author,
 				title, categoryId);
 		return bookList;
