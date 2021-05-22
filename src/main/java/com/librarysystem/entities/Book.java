@@ -26,7 +26,6 @@ public class Book {
 	@Column
 	private String author;
 	
-	@Column
 	@JoinColumn(name="categoryId")
 	@ManyToOne
 	private Category category;
