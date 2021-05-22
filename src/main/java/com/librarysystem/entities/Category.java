@@ -2,51 +2,32 @@ package com.librarysystem.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "category")
+@Table(name = "category_table")
 public class Category {
 	
-	@Column
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int categoryId;
+	private int id;
 	
-	@Column
-	private String categoryName;
+	@Column(name = "name", length = 20, nullable = false, unique = true, updatable = false)
+	private String name;
 
-	/**
-	 * @return the categoryId
-	 */
-	public int getCategoryId() {
-		return categoryId;
+	public int getId() {
+		return id;
 	}
 
-	/**
-	 * @param categoryId the categoryId to set
-	 */
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	/**
-	 * @return the categoryName
-	 */
-	public String getCategoryName() {
-		return categoryName;
+	public String getName() {
+		return name;
 	}
 
-	/**
-	 * @param categoryName the categoryName to set
-	 */
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	
-
 }
