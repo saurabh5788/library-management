@@ -8,10 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.librarysystem.dto.BookActivityRequestDTO;
+import com.librarysystem.dto.BookActivityResponseDTO;
 import com.librarysystem.service.BookService;
 
 @RestController
@@ -33,8 +36,8 @@ public class BookController {
 	
 	
 	@PostMapping("/users/{userid}/books")
-	public ResponseEntity<?> returnBooks(){
+	public ResponseEntity<BookActivityResponseDTO> returnBooks(@PathVariable("userid") int userId,@RequestBody BookActivityRequestDTO bookActivityRequestDTO){
 		
-		return bookService.returnBooks();
+		return bookService.returnBooks(userId, bookActivityRequestDTO);
 	}
 }
