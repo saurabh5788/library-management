@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.librarysystem.entities.Book;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookRepository extends JpaRepository<Book, Integer> {
 	@Query("SELECT b FROM Book b "
 			+ "WHERE "
 			+ "(:author is null or b.author = :author) "
