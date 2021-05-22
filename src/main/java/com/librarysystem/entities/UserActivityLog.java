@@ -14,23 +14,23 @@ import javax.persistence.Table;
 public class UserActivityLog {
 
 	@Id
-	@Column
+	@Column(name="log_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int logId;
 	
-	@Column
+	@Column(name ="user_id")
 	private int userId;
 	
-	@Column
+	@Column(name="book_id")
 	private int bookId;
 	
-	@Column
+	@Column(name="borrow_date")
 	private LocalDate borrowDate;
 	
-	@Column
+	@Column(name="return_date")
 	private LocalDate returnDate;
 	
-	@Column
+	@Column(name="charge")
 	private double charge;
 
 	/**
