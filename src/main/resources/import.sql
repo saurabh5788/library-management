@@ -5,3 +5,6 @@ INSERT INTO category_table (id,name) values (4, 'Mystery');
 
 INSERT INTO role_table (id,name) values (1, 'Admin');
 INSERT INTO role_table (id,name) values (2, 'User');
+
+
+INSERT INTO book (book_id,title,author,category_Id) values (1,'sdfsdf','adasda',1);
