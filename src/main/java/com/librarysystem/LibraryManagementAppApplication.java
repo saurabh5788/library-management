@@ -18,6 +18,9 @@ public class LibraryManagementAppApplication {
 		SpringApplication.run(LibraryManagementAppApplication.class, args);
 	}
 	
+	/**
+	 * @return
+	 */
 	@Bean
     public Docket api() { 
         return new Docket(DocumentationType.SWAGGER_2)  

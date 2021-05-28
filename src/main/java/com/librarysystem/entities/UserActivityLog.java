@@ -9,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
+import lombok.Builder.Default;
+
 @Entity
 @Table(name = "user_activity_log")
 public class UserActivityLog {
@@ -30,8 +34,9 @@ public class UserActivityLog {
 	@Column(name="return_date")
 	private LocalDate returnDate;
 	
+	
 	@Column(name="charge")
-	private double charge;
+	private int charge;
 
 	/**
 	 * @return the logId
@@ -106,17 +111,18 @@ public class UserActivityLog {
 	/**
 	 * @return the charge
 	 */
-	public double getCharge() {
+	public int getCharge() {
 		return charge;
 	}
 
 	/**
 	 * @param charge the charge to set
 	 */
-	public void setCharge(double charge) {
+	public void setCharge(int charge) {
 		this.charge = charge;
 	}
-	
+
+
 	
 	
 	

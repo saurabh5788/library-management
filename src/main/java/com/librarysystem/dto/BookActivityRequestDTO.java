@@ -2,26 +2,36 @@ package com.librarysystem.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
 
 public class BookActivityRequestDTO {
 
-	private ArrayList<Integer> bookIds;
+	@NotEmpty(message = "Book ids cannot be empty")
+	private List<Integer> bookIds;
 
+	@Past(message = "Borrow date cannot be current or future date")
 	private LocalDate borrowedDate;
 
 	private LocalDate returnDate;
 
+	
+	
+	
+	
 	/**
 	 * @return the bookIds
 	 */
-	public ArrayList<Integer> getBookIds() {
+	public List<Integer> getBookIds() {
 		return bookIds;
 	}
 
 	/**
 	 * @param bookIds the bookIds to set
 	 */
-	public void setBookIds(ArrayList<Integer> bookIds) {
+	public void setBookIds(List<Integer> bookIds) {
 		this.bookIds = bookIds;
 	}
 

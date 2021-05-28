@@ -44,67 +44,64 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public ResponseEntity<BookActivityResponseDTO> returnBooks(int userid,
 			BookActivityRequestDTO bookActivityRequestDTO) {
-		double chargeForLateReturn = 0.0;
+
 		long allowedDays = 14;
+
 		BookActivityResponseDTO bookActivityResponseDTO;
-		if (!bookActivityRequestDTO.getBookIds().isEmpty()) {
-			List<UserActivityLog> userActivityLogList = userActivityRepository
-					.findAllById(bookActivityRequestDTO.getBookIds());
-			if (!userActivityLogList.isEmpty()) {
-				for (UserActivityLog userLog : userActivityLogList) {
-					LocalDate borrowedDate = userLog.getBorrowDate();
-					LocalDate currentDate = LocalDate.now();
-					long noOfDaysBetween = ChronoUnit.DAYS.between(currentDate, borrowedDate);
-					if (noOfDaysBetween > allowedDays) {
-						chargeForLateReturn = chargeForLateReturn + calculateLateFee(noOfDaysBetween, allowedDays);
-					}
-					UserActivityLog userActivityLog = new UserActivityLog();
-					userActivityLog.setLogId(userLog.getLogId());
-					userActivityLog.setBookId(userLog.getBookId());
-					userActivityLog.setBorrowDate(bookActivityRequestDTO.getBorrowedDate());
-					userActivityLog.setCharge(chargeForLateReturn);
-					userActivityLog.setReturnDate(currentDate);
-					userActivityLog.setUserId(userid);
-					userActivityRepository.save(userActivityLog);
-
-					bookActivityResponseDTO = new BookActivityResponseDTO("Books returned Successfully",
-							HttpStatus.OK.toString());
-					return new ResponseEntity<>(bookActivityResponseDTO, HttpStatus.OK);
-
+		List<UserActivityLog> userActivityLogList = userActivityRepository
+				.findAllById(bookActivityRequestDTO.getBookIds());
+		if (!userActivityLogList.isEmpty()) {
+			for (UserActivityLog userLog : userActivityLogList) {
+	//		userActivityLogList.forEach(userLog)::{
+			UserActivityLog userActivityLog = new UserActivityLog();
+				LOGGER.info("Returning book with id : {} ", userLog.getBookId());
+				LocalDate borrowedDate = userLog.getBorrowDate();
+				LocalDate currentDate = LocalDate.now();
+				long noOfDaysBetween = ChronoUnit.DAYS.between(borrowedDate, currentDate);
+				LOGGER.info("Number of days between borrow and return date : {} : ", noOfDaysBetween);
+				if (noOfDaysBetween > allowedDays) {
+					userActivityLog.setCharge(calculateLateFee(noOfDaysBetween, allowedDays));
+				} else {
+					userActivityLog.setCharge(0);
 				}
-			} else {
-				bookActivityResponseDTO = new BookActivityResponseDTO("No details found for the given book ids",
-						HttpStatus.NOT_FOUND.toString());
-				return new ResponseEntity<>(bookActivityResponseDTO, HttpStatus.NOT_FOUND);
+				userActivityLog.setLogId(userLog.getLogId());
+				userActivityLog.setBookId(userLog.getBookId());
+				userActivityLog.setBorrowDate(userLog.getBorrowDate());
+				userActivityLog.setReturnDate(currentDate);
+				userActivityLog.setUserId(userid);
+				userActivityRepository.save(userActivityLog);
 			}
-
+			bookActivityResponseDTO = new BookActivityResponseDTO("Books returned Successfully",
+					HttpStatus.OK.toString());
+			return new ResponseEntity<>(bookActivityResponseDTO, HttpStatus.OK);
 		} else {
-			bookActivityResponseDTO = new BookActivityResponseDTO("Request parameters cannot be null or empty",
-					HttpStatus.BAD_REQUEST.toString());
-			return new ResponseEntity<>(bookActivityResponseDTO, HttpStatus.BAD_REQUEST);
+			bookActivityResponseDTO = new BookActivityResponseDTO("No details found for the given book ids",
+					HttpStatus.NOT_FOUND.toString());
+			return new ResponseEntity<>(bookActivityResponseDTO, HttpStatus.NOT_FOUND);
 		}
-		return null;
+
 	}
 
-	private double calculateLateFee(long numberOfDays, long allowedDays) {
+	public static int calculateLateFee(long numberOfDays, long allowedDays) {
 		long daysToBeCharged = numberOfDays - allowedDays;
-		double lateFees = 0.0;
-		if (daysToBeCharged < 4) {
-			lateFees = daysToBeCharged * 20;
+		int daysGap = (int) daysToBeCharged;
+		int lateFees = 0;
+		if (daysGap < 4) {
+			lateFees = daysGap * 20;
 		} else {
-			lateFees = daysToBeCharged * 50;
+			lateFees = daysGap * 50;
 		}
+		LOGGER.info("Late fees for returning book is {} : ", lateFees);
 		return lateFees;
 	}
 
 	@Override
-	public List<Book> fetchBooksByAuthorTitleCategory(String author,
-			String title, Integer categoryId, int pageNo, int pageSize){
-		LOGGER.info("fetching Books by : {}, {}, {}",author,title,categoryId);
-		
+	public List<Book> fetchBooksByAuthorTitleCategory(String author, String title, Integer categoryId, int pageNo,
+			int pageSize) {
+		LOGGER.info("fetching Books by : {}, {}, {}", author, title, categoryId);
+
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
-		List<Book> bookList = bookRepository.fetchBooksByAuthorTitleCategory(author,
-				title, categoryId, pageable);
+		List<Book> bookList = bookRepository.fetchBooksByAuthorTitleCategory(author, title, categoryId, pageable);
 		return bookList;
 	}
 
